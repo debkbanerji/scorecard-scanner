@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
      */
     private ViewPager mViewPager;
 
+    public static String testText = "Hello from MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,9 +157,9 @@ public class MainActivity extends AppCompatActivity
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
-                return ScanFragment.newInstance("ABC", "DEF");
+                return ScanFragment.newInstance();
             } else {
-                return CalculateFragment.newInstance("GHI", "JKL");
+                return CalculateFragment.newInstance();
             }
 
 //            return PlaceholderFragment.newInstance(position + 1);
