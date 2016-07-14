@@ -4,17 +4,23 @@
     android:layout_height="match_parent"
     tools:context="com.example.scorecardscanner.ScanFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TODO: Implement scan" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="TODO: Implement scan" />-->
+
+    <FrameLayout
+        android:id="@+id/camera_preview"
+        android:layout_width="fill_parent"
+        android:layout_height="471dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal|top" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Scan"
         android:id="@+id/testButton"
-        android:layout_gravity="center" />
+        android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

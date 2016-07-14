@@ -1,16 +1,20 @@
 package com.example.scorecardscanner;
 
 import android.content.Context;
-import android.content.Intent;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+
+import java.io.IOException;
 
 
 /**
@@ -24,6 +28,16 @@ import android.widget.Button;
 public class ScanFragment extends Fragment {
     public View rootView;
 
+//    Camera mCamera = null;
+
+    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+
+            Log.e("PICTURE TAKEN","PICTURE TAKEN");
+        }
+    };
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,8 +73,19 @@ public class ScanFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.e("CLICK", MainActivity.testText);
+                MainActivity.mCamera.takePicture(null,null,mPicture);
             }
         });
+
+        // Create an instance of Camera
+        MainActivity.mCamera = MainActivity.getCameraInstance();
+        // Create our Preview view and set it as the content of our activity.
+        MainActivity.mPreview = new CameraPreview(getContext(), MainActivity.mCamera);
+        FrameLayout preview = (FrameLayout) rootView.findViewById(R.id.camera_preview);
+        preview.addView(MainActivity.mPreview);
+
+
+        MainActivity.setCameraDisplayOrientation(getActivity(),0,MainActivity.mCamera);
         return rootView;
     }
 
@@ -68,6 +93,22 @@ public class ScanFragment extends Fragment {
         if (mListener != null) {
             mListener.onScanFragmentInteraction(uri);
         }
+    }
+
+
+    /**
+     * A safe way to get an instance of the Camera object.
+     */
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open(0); // attempt to get a Camera instance
+        } catch (Exception e) {
+            // Camera is not available (in use or does not exist)
+            Log.e("ERROR GETCAMERAINSTANCE", e.getMessage());
+
+        }
+        return c; // returns null if camera is unavailable
     }
 
     @Override
@@ -96,6 +137,7 @@ public class ScanFragment extends Fragment {
     }
 
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -109,4 +151,9 @@ public class ScanFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onScanFragmentInteraction(Uri uri);
     }
+
+
+
 }
+
+
