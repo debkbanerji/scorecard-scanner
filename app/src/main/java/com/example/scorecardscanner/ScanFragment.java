@@ -68,12 +68,25 @@ public class ScanFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_scan, container, false);
         // Inflate the layout for this fragment
-        Button testButton = (Button) rootView.findViewById(R.id.testButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
+//        Button testButton = (Button) rootView.findViewById(R.id.testButton);
+//        testButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.e("CLICK", MainActivity.testText);
+//                MainActivity.mCamera.takePicture(null,null,mPicture);
+//            }
+//        });
+
+        FrameLayout frameLayout = (FrameLayout) rootView.findViewById(R.id.camera_preview);
+        frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("CLICK", MainActivity.testText);
-                MainActivity.mCamera.takePicture(null,null,mPicture);
+                try {
+                    MainActivity.mCamera.takePicture(null,null,mPicture);
+                } catch (Exception e) {
+                    Log.e("Error taking picture", e.getMessage());
+                }
             }
         });
 
